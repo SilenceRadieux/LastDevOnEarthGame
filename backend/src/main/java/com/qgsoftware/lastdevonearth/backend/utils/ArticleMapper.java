@@ -17,9 +17,6 @@ public interface ArticleMapper {
 
     ArticleEntity articleServiceModelToArticleEntity(ArticleServiceModel articleServiceModel);
 
-    ArticleServiceModel articleEntityToArticleServiceModel(ArticleEntity articleEntity);
-
-    ArticleDTO articleServiceModelToArticleDTO(ArticleServiceModel articleServiceModel);
 
     List<ArticleServiceModel> listArticleEntityToListArticleServiceModel(List<ArticleEntity> listArticleEntity);
 
