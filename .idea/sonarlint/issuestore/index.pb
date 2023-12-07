@@ -183,3 +183,5 @@ Y
 )frontend/src/app/about/about.component.ts,4\e\4e589682f601ea680b6f405ee80db21c17d73fd2
 Y
 )frontend/src/app/service/audio.service.ts,0\c\0c6fb1daa0522e4ad4a8841f7ce6d5f919125989
+[
++frontend/src/app/about/about.component.scss,a\2\a2840c43069dd24a9726f602a5bc5e48b324862a
