@@ -185,3 +185,11 @@ Y
 )frontend/src/app/service/audio.service.ts,0\c\0c6fb1daa0522e4ad4a8841f7ce6d5f919125989
 [
 +frontend/src/app/about/about.component.scss,a\2\a2840c43069dd24a9726f602a5bc5e48b324862a
+o
+?frontend/src/app/details-article/details-article.component.html,b\a\ba79e3c4599f190b428e9693c127bde4a28986be
+m
+=frontend/src/app/details-article/details-article.component.ts,3\f\3fb5a8fba37ff8aad6aa59a2abba3f4117f7d39e
+o
+?frontend/src/app/details-article/details-article.component.scss,6\a\6ac2e8ec8cfed05810be5be09314835c665aa7ee
+Œ
+\backend/src/main/java/com/qgsoftware/lastdevonearth/backend/configuration/SpaController.java,3\5\3552af779649d1f70467832dba63c35a79c5420b

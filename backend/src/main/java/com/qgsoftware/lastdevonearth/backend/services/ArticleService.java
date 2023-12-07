@@ -45,4 +45,11 @@ public class ArticleService {
     }
 
 
+    public ArticleServiceModel findById(Long id) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(id);
+        if (articleEntity.isPresent()) {
+            return articleMapper.articleEntityToArticleServiceModel(articleEntity.get());
+        }
+        return null;
+    }
 }

@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
 public class ArticleServiceModel {
+    private long id;
     private Date dateCreation;
     private String cover;
     private String title;

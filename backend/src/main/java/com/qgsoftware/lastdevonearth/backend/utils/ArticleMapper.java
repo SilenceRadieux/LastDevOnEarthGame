@@ -16,10 +16,11 @@ public interface ArticleMapper {
     ArticleServiceModel articleDTOToArticleServiceModel(ArticleDTO articleDTO);
 
     ArticleEntity articleServiceModelToArticleEntity(ArticleServiceModel articleServiceModel);
-
-
+    
+    ArticleDTO articleServiceModelToArticleDTO(ArticleServiceModel articleServiceModel);
     List<ArticleServiceModel> listArticleEntityToListArticleServiceModel(List<ArticleEntity> listArticleEntity);
 
     List<ArticleDTO> listArticleServiceModelToArticleDTO(List<ArticleServiceModel> articleServiceModel);
 
+    ArticleServiceModel articleEntityToArticleServiceModel(ArticleEntity articleEntity);
 }

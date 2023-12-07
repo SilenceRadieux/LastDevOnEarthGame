@@ -2,7 +2,6 @@ package com.qgsoftware.lastdevonearth.backend.controllers;
 
 import com.qgsoftware.lastdevonearth.backend.dto.ArticleDTO;
 import com.qgsoftware.lastdevonearth.backend.services.ArticleService;
-import com.qgsoftware.lastdevonearth.backend.services.ArticleServiceModel;
 import com.qgsoftware.lastdevonearth.backend.utils.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +33,10 @@ public class ArticleController {
         return articleMapper.listArticleServiceModelToArticleDTO(articleService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ArticleDTO findById(@PathVariable("id") Long id) {
+        return articleMapper.articleServiceModelToArticleDTO(articleService.findById(id));
+    }
 
     @PutMapping("/{id}")
     public void updateArticle(@PathVariable("id") Long id, @RequestBody ArticleDTO articleDTO) {
