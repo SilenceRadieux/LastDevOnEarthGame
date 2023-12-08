@@ -205,3 +205,7 @@ Y
 )frontend/src/app/service/media.service.ts,a\0\a0353eb68ddcaa163a83e743569cb025f75c87fc
 F
 frontend/tsconfig.json,1\8\18471fb0707c190401cd5328ddb4664160a53d26
+a
+1frontend/src/app/download/download.component.html,e\7\e7d97c9ad8438913ba1ae7d821f7f8cd2f1f894f
+a
+1frontend/src/app/download/download.component.scss,6\8\6843ed49e9829a5f50190b8ff119e0fa278af6d1
