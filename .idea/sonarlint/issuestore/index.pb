@@ -193,3 +193,15 @@ o
 ?frontend/src/app/details-article/details-article.component.scss,6\a\6ac2e8ec8cfed05810be5be09314835c665aa7ee
 Œ
 \backend/src/main/java/com/qgsoftware/lastdevonearth/backend/configuration/SpaController.java,3\5\3552af779649d1f70467832dba63c35a79c5420b
+[
++frontend/src/app/media/media.component.html,6\9\696da4337418261934030427bd11421ec4770834
+[
++frontend/src/app/media/media.component.scss,7\0\709fffde829764c1b53a2f95182961c43af357bc
+Y
+)frontend/src/app/media/media.component.ts,c\c\ccc3261d03595a71fcd248ac499c2a0b89279558
+S
+#frontend/src/app/interface/media.ts,8\4\84813dc22e486246c24f2ce3b36e115b17ac1c38
+Y
+)frontend/src/app/service/media.service.ts,a\0\a0353eb68ddcaa163a83e743569cb025f75c87fc
+F
+frontend/tsconfig.json,1\8\18471fb0707c190401cd5328ddb4664160a53d26
