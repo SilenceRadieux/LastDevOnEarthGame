@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends UserDetailsService {
 
-    Authentication authenticate(String pseudonym, String password) throws Exception;
+    Authentication authenticate(String username, String password) throws Exception;
 
-    UserDetails save(String pseudonym,String email, String password)throws AccountExistsException;
+    UserDetails save( String username, String password)throws AccountExistsException;
 
-
+    Long getUserId(String username);
 
 }

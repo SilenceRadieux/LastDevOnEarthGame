@@ -14,14 +14,18 @@ public class ArticleServiceModel {
     private String cover;
     private String title;
     private String content;
+    private int upvotes;
+    private int downvotes;
 
     public ArticleServiceModel() {}
 
-    public ArticleServiceModel(String cover, String title, String content) {
+    public ArticleServiceModel(String cover, String title, String content, int upvotes, int downvotes) {
         this.dateCreation = new Date();
         this.cover = cover;
         this.title = title;
         this.content = content;
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
     }
 
 }

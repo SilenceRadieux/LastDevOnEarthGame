@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,5 +28,11 @@ public class ArticleEntity {
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private List<VoteEntity> votes;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private List<CommentaryEntity> comments;
 
 }
