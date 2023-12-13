@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -30,7 +31,8 @@ public class ArticleService {
     }
 
     public List<ArticleServiceModel> findAll() {
-        return articleMapper.listArticleEntityToListArticleServiceModel((List<ArticleEntity>) articleRepository.findAll());
+        return articleMapper.listArticleEntityToListArticleServiceModel((List<ArticleEntity>)
+                articleRepository.findAll());
     }
 
     public boolean delete(long id) {
@@ -41,5 +43,17 @@ public class ArticleService {
             return false;
         }
     }
+
+
+    public ArticleServiceModel findById(Long id) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(id);
+        if (articleEntity.isPresent()) {
+            return articleMapper.articleEntityToArticleServiceModel(articleEntity.get());
+        }
+        return null;
+    }
+
+
+
 
 }

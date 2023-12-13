@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("article")
@@ -32,6 +33,11 @@ public class ArticleController {
         return articleMapper.listArticleServiceModelToArticleDTO(articleService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ArticleDTO findById(@PathVariable("id") Long id) {
+        return articleMapper.articleServiceModelToArticleDTO(articleService.findById(id));
+    }
+
     @PutMapping("/{id}")
     public void updateArticle(@PathVariable("id") Long id, @RequestBody ArticleDTO articleDTO) {
         articleService.add(articleMapper.articleDTOToArticleServiceModel(articleDTO), id);
@@ -39,5 +45,6 @@ public class ArticleController {
 
     @DeleteMapping("/{id}")
     public boolean deleteArticle(@PathVariable("id") Long id) {return articleService.delete(id);}
+
 
 }

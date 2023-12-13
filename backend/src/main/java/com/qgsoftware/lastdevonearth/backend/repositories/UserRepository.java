@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
-    UserEntity findByPseudonym(String pseudonym);
+    UserEntity findByUsername(String username);
 
 
 

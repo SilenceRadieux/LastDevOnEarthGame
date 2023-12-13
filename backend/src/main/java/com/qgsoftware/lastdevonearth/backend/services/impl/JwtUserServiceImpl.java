@@ -1,9 +1,13 @@
 package com.qgsoftware.lastdevonearth.backend.services.impl;
 
 
+import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.UserEntity;
+import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
 import com.qgsoftware.lastdevonearth.backend.exception.AccountExistsException;
+import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.UserRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.services.JwtUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,6 +19,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
@@ -29,6 +34,10 @@ public class JwtUserServiceImpl implements JwtUserService {
 
     private final UserRepository userRepository;
 
+    private final ArticleRepository articleRepository;
+
+    private final VoteRepository voteRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -36,17 +45,21 @@ public class JwtUserServiceImpl implements JwtUserService {
             String signingKey,
             AuthenticationConfiguration authenticationConfiguration,
             UserRepository userRepository,
+            ArticleRepository articleRepository,
+            VoteRepository voteRepository,
             PasswordEncoder passwordEncoder) {
         this.signingKey = signingKey;
         this.authenticationConfiguration = authenticationConfiguration;
         this.userRepository = userRepository;
+        this.articleRepository = articleRepository;
+        this.voteRepository = voteRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByPseudonym(username);
+        UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("The owner could not be found");
         }
@@ -60,14 +73,20 @@ public class JwtUserServiceImpl implements JwtUserService {
     }
 
     @Override
-    public UserDetails save(String username, String email, String password) throws AccountExistsException {
-        UserDetails existingUser = userRepository.findByPseudonym(username);
+    public UserDetails save(String username, String password) throws AccountExistsException {
+        UserDetails existingUser = userRepository.findByUsername(username);
         if (existingUser != null) {
             throw new AccountExistsException();
         }
-        UserEntity userEntity = new UserEntity(username, email, passwordEncoder.encode(password));
+        UserEntity userEntity = new UserEntity(username, passwordEncoder.encode(password));
         userRepository.save(userEntity);
         return userEntity;
+    }
+
+    @Override
+    public Long getUserId(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        return (userEntity != null) ? userEntity.getId() : null;
     }
 
     @Override
@@ -97,10 +116,10 @@ public class JwtUserServiceImpl implements JwtUserService {
                 .compact();
     }
 
-    public void updatePseudonym(Long id, String pseudonym) {
+    public void updateUsername(Long id, String username) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isPresent()) {
-            userEntity.get().setPseudonym(pseudonym);
+            userEntity.get().setUsername(username);
             userRepository.save(userEntity.get());
         }
     }
@@ -113,16 +132,29 @@ public class JwtUserServiceImpl implements JwtUserService {
         }
     }
 
-    public void updateEmail(Long id, String email) {
-        Optional<UserEntity> userEntity = userRepository.findById(id);
-        if (userEntity.isPresent()) {
-            userEntity.get().setEmail(email);
-            userRepository.save(userEntity.get());
-        }
-    }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public boolean addVote(Long id, Long articleId) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+        Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
+
+        if (userOptional.isPresent() && articleOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            ArticleEntity article = articleOptional.get();
+
+            VoteEntity vote = new VoteEntity();
+            vote.setArticle(article);
+            vote.setUser(user);
+
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
 
 }
