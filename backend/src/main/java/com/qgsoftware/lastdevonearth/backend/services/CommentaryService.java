@@ -6,14 +6,14 @@ import com.qgsoftware.lastdevonearth.backend.utils.CommentaryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class CommentaryService {
 
-    CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
-
     private final CommentaryRepository commentaryRepository;
+    CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
 
     @Autowired
     public CommentaryService(CommentaryRepository commentaryRepository) {

@@ -24,7 +24,7 @@ public class CommentaryEntity {
     private String dateTime;
 
     @ManyToOne
-    @JoinColumn(name="article_id")
+    @JoinColumn(name = "article_id")
     private ArticleEntity article;
 
 

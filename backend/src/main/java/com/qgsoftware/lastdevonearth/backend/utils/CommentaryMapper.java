@@ -22,11 +22,11 @@ public interface CommentaryMapper {
     CommentaryDTO commentaryServiceModelToCommentaryDTO(CommentaryServiceModel commentaryServiceModel);
 
     List<CommentaryServiceModel> listCommentaryEntityToListCommentaryServiceModel(
-        List<CommentaryEntity> listCommentaryEntity
+            List<CommentaryEntity> listCommentaryEntity
     );
 
     List<CommentaryDTO> listCommentaryServiceModelToCommentaryDTO(
-        List<CommentaryServiceModel> listCommentaryServiceModel
+            List<CommentaryServiceModel> listCommentaryServiceModel
     );
 
 }

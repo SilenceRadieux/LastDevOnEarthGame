@@ -4,17 +4,17 @@ import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
 import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.utils.VoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class VoteService {
 
-    VoteMapper voteMapper = VoteMapper.INSTANCE;
-
     private final VoteRepository voteRepository;
+    VoteMapper voteMapper = VoteMapper.INSTANCE;
 
     @Autowired
     public VoteService(VoteRepository voteRepository) {
@@ -30,7 +30,9 @@ public class VoteService {
     }
 
     public List<VoteServiceModel> findAll() {
-        return voteMapper.listVoteEntityToListVoteServiceModel((List<VoteEntity>)voteRepository.findAll());}
+        return voteMapper.listVoteEntityToListVoteServiceModel((List<VoteEntity>) voteRepository.findAll());
+    }
+
 
     public VoteServiceModel findById(Long id) {
         Optional<VoteEntity> voteEntity = voteRepository.findById(id);

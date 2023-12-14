@@ -12,12 +12,13 @@ import java.util.List;
 @RequestMapping("media")
 public class MediaController {
 
+    private final MediaService mediaService;
     MediaMapper mediaMapper = MediaMapper.INSTANCE;
 
-    private final MediaService mediaService;
-
     @Autowired
-    public MediaController(MediaService mediaService) {this.mediaService = mediaService;}
+    public MediaController(MediaService mediaService) {
+        this.mediaService = mediaService;
+    }
 
     @PostMapping
     public void addMedia(@RequestBody MediaDTO mediaDTO) {
@@ -25,7 +26,9 @@ public class MediaController {
     }
 
     @GetMapping
-    public List<MediaDTO> findAll() {return mediaMapper.listMediaServiceModelToMediaDTO(mediaService.findAll());}
+    public List<MediaDTO> findAll() {
+        return mediaMapper.listMediaServiceModelToMediaDTO(mediaService.findAll());
+    }
 
     @PutMapping("/{id}")
     public void updateMedia(@PathVariable("id") Long id, @RequestBody MediaDTO mediaDTO) {
@@ -33,6 +36,8 @@ public class MediaController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteMedia(@PathVariable("id") Long id) {return mediaService.delete(id);}
+    public boolean deleteMedia(@PathVariable("id") Long id) {
+        return mediaService.delete(id);
+    }
 
 }

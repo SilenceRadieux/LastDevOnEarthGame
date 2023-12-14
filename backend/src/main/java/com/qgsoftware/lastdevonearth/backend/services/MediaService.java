@@ -12,12 +12,13 @@ import java.util.List;
 @Service
 public class MediaService {
 
+    private final MediaRepository mediaRepository;
     MediaMapper mediaMapper = MediaMapper.INSTANCE;
 
-    private final MediaRepository mediaRepository;
-
     @Autowired
-    public MediaService(MediaRepository mediaRepository) {this.mediaRepository = mediaRepository;}
+    public MediaService(MediaRepository mediaRepository) {
+        this.mediaRepository = mediaRepository;
+    }
 
     public void add(MediaServiceModel mediaServiceModel, @Nullable Long id) {
         MediaEntity mediaEntity = mediaMapper.mediaServiceModelToMediaEntity(mediaServiceModel);

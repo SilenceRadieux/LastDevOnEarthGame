@@ -5,23 +5,21 @@ import com.qgsoftware.lastdevonearth.backend.services.VoteService;
 import com.qgsoftware.lastdevonearth.backend.utils.VoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("vote")
 public class VoteController {
 
+    private final VoteService voteService;
     VoteMapper voteMapper = VoteMapper.INSTANCE;
 
-    private final VoteService voteService;
-
     @Autowired
-    public VoteController(VoteService voteService) {this.voteService = voteService;}
-
-    @PostMapping("/user/{id}/article/{articleId}/vote")
-    public void addVote(@RequestBody VoteDTO voteDTO) {
-        voteService.add(voteMapper.voteDTOToVoteServiceModel(voteDTO), null);
+    public VoteController(VoteService voteService) {
+        this.voteService = voteService;
     }
+
 
     @GetMapping
     public List<VoteDTO> findAll() {

@@ -1,6 +1,5 @@
 package com.qgsoftware.lastdevonearth.backend.services.impl;
 
-
 import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.UserEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
@@ -19,9 +18,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -42,12 +41,12 @@ public class JwtUserServiceImpl implements JwtUserService {
 
     @Autowired
     public JwtUserServiceImpl(@Value("${jwt.signing.key}")
-            String signingKey,
-            AuthenticationConfiguration authenticationConfiguration,
-            UserRepository userRepository,
-            ArticleRepository articleRepository,
-            VoteRepository voteRepository,
-            PasswordEncoder passwordEncoder) {
+                              String signingKey,
+                              AuthenticationConfiguration authenticationConfiguration,
+                              UserRepository userRepository,
+                              ArticleRepository articleRepository,
+                              VoteRepository voteRepository,
+                              PasswordEncoder passwordEncoder) {
         this.signingKey = signingKey;
         this.authenticationConfiguration = authenticationConfiguration;
         this.userRepository = userRepository;
@@ -137,7 +136,7 @@ public class JwtUserServiceImpl implements JwtUserService {
         userRepository.deleteById(id);
     }
 
-    public boolean addVote(Long id, Long articleId) {
+    public boolean addVote(Long id, Long articleId, String voteString) {
         Optional<UserEntity> userOptional = userRepository.findById(id);
         Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
 
@@ -148,6 +147,8 @@ public class JwtUserServiceImpl implements JwtUserService {
             VoteEntity vote = new VoteEntity();
             vote.setArticle(article);
             vote.setUser(user);
+            vote.setVote(voteString);
+            voteRepository.save(vote);
 
             return true;
 

@@ -7,8 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,13 +27,13 @@ public class UserEntity implements UserDetails {
    /* @ElementCollection
     private Set<Long> votedArticleIds = new HashSet<>() ;*/
 
-    public UserEntity (String username, String password) {
+    public UserEntity(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     public void addVote(Long articleId) {
-        VoteEntity vote = new VoteEntity( );
+        VoteEntity vote = new VoteEntity();
     }
 
     @Override
@@ -72,7 +70,6 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 
 }

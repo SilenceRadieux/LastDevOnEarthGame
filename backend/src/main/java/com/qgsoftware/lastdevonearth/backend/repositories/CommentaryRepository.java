@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface CommentaryRepository extends CrudRepository<CommentaryEntity, Long> {}
+public interface CommentaryRepository extends CrudRepository<CommentaryEntity, Long> {
+}

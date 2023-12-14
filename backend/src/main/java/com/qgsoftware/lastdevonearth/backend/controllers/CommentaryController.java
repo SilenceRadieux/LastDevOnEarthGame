@@ -12,12 +12,13 @@ import java.util.List;
 @RequestMapping("commentary")
 public class CommentaryController {
 
+    private final CommentaryService commentaryService;
     CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
 
-    private final CommentaryService commentaryService;
-
     @Autowired
-    public CommentaryController(CommentaryService commentaryService) {this.commentaryService = commentaryService;}
+    public CommentaryController(CommentaryService commentaryService) {
+        this.commentaryService = commentaryService;
+    }
 
     @PostMapping
     public void addCommentary(@RequestBody CommentaryDTO commentaryDTO) {
@@ -35,6 +36,8 @@ public class CommentaryController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteCommentary(@PathVariable("id") Long id) {return commentaryService.delete(id);}
+    public boolean deleteCommentary(@PathVariable("id") Long id) {
+        return commentaryService.delete(id);
+    }
 
 }

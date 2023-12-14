@@ -241,3 +241,11 @@ _
 /frontend/src/app/download/download.component.ts,7\e\7e10a159109112d5b5112bc4a6cc2ff7690d500f
 †
 Vbackend/src/main/java/com/qgsoftware/lastdevonearth/backend/dto/AuthenticationDTO.java,d\2\d2702af7be49532868430ffe54d3aed6f91dc63b
+R
+"frontend/src/app/interface/vote.ts,9\4\94fa1fae47234ccb9aba0757859383201d4f737a
+
+Obackend/src/main/java/com/qgsoftware/lastdevonearth/backend/dto/VoteAddDto.java,e\6\e6e450424f6d27bb5bc0651cc9abc1da035ea0c0
+w
+G.idea/sonarlint/issuestore/b/a/ba2fde1b75a6da1f68742dd3fb735b44e7a7eddf,5\9\59b99174df81178fba51e7ff0b2d81c76fb11835
+ˆ
+Xbackend/src/test/java/com/qgsoftware/lastdevonearth/backend/BackendApplicationTests.java,0\c\0cfec12a88f762c63f641a6baff4c85f432aaeaa

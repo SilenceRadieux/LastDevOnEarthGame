@@ -22,13 +22,8 @@ public class VoteEntity {
     @JoinColumn(name = "article_id", nullable = false)
     private ArticleEntity article;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "vote", nullable = false)
-    private Vote vote;
+    @Column(name = "vote", nullable = true)
+    private String vote;
 
-    public enum Vote {
-        UPVOTE,
-        DOWNVOTE
-    }
 
 }

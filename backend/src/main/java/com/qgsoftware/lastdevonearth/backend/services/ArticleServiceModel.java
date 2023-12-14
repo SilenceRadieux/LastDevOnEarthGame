@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +16,8 @@ public class ArticleServiceModel {
     private int upvotes;
     private int downvotes;
 
-    public ArticleServiceModel() {}
+    public ArticleServiceModel() {
+    }
 
     public ArticleServiceModel(String cover, String title, String content, int upvotes, int downvotes) {
         this.dateCreation = new Date();
