@@ -21,13 +21,17 @@ public class VoteService {
         this.voteRepository = voteRepository;
     }
 
-    public void add(VoteServiceModel voteServiceModel, @Nullable Long id) {
+    /*public void add(VoteServiceModel voteServiceModel, @Nullable Long id) {
+        Long userId = voteServiceModel.getId();
+        if (voteRepository.countByArticleId(userId) > 0) {
+            throw new RuntimeException("User already voted");
+        }
         VoteEntity voteEntity = voteMapper.voteServiceModelToVoteEntity(voteServiceModel);
         if (id != null) {
             voteEntity.setId(id);
         }
         voteRepository.save(voteEntity);
-    }
+    }*/
 
     public List<VoteServiceModel> findAll() {
         return voteMapper.listVoteEntityToListVoteServiceModel((List<VoteEntity>) voteRepository.findAll());

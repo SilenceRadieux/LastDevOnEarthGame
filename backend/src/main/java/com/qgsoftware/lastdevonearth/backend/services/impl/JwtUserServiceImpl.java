@@ -144,18 +144,26 @@ public class JwtUserServiceImpl implements JwtUserService {
             UserEntity user = userOptional.get();
             ArticleEntity article = articleOptional.get();
 
-            VoteEntity vote = new VoteEntity();
-            vote.setArticle(article);
-            vote.setUser(user);
-            vote.setVote(voteString);
-            voteRepository.save(vote);
+            Optional<VoteEntity> existingVoteOptional = voteRepository.findByUserAndArticle(user, article);
+
+            if (existingVoteOptional.isPresent()) {
+                VoteEntity existingVote = existingVoteOptional.get();
+                existingVote.setVote(voteString);
+                voteRepository.save(existingVote);
+            } else {
+                VoteEntity vote = new VoteEntity();
+                vote.setArticle(article);
+                vote.setUser(user);
+                vote.setVote(voteString);
+                voteRepository.save(vote);
+            }
 
             return true;
-
         } else {
             return false;
         }
     }
+
 
 
 }

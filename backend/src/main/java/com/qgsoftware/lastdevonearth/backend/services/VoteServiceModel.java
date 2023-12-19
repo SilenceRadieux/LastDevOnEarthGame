@@ -7,7 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class VoteServiceModel {
     private Long id;
-    private Long idUser;
-    private Long articleId;
     private String vote;
 }

@@ -28,4 +28,5 @@ public interface ArticleMapper {
 
     ArticleServiceModel articleEntityToArticleServiceModel(ArticleEntity articleEntity);
 
+
 }

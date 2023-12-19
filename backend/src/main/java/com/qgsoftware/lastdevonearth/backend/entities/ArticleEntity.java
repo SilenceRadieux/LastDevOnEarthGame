@@ -29,7 +29,7 @@ public class ArticleEntity {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<VoteEntity> votes;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)

@@ -1,5 +1,6 @@
 package com.qgsoftware.lastdevonearth.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,12 @@ public class VoteEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)
+    @JsonIgnore
     private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "article_id", nullable = false)
+    @JsonIgnore
     private ArticleEntity article;
 
     @Column(name = "vote", nullable = true)

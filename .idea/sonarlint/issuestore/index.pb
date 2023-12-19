@@ -249,3 +249,7 @@ w
 G.idea/sonarlint/issuestore/b/a/ba2fde1b75a6da1f68742dd3fb735b44e7a7eddf,5\9\59b99174df81178fba51e7ff0b2d81c76fb11835
 ˆ
 Xbackend/src/test/java/com/qgsoftware/lastdevonearth/backend/BackendApplicationTests.java,0\c\0cfec12a88f762c63f641a6baff4c85f432aaeaa
+U
+%frontend/src/assets/images/upvote.svg,9\e\9eca4bb112ac3966742e78e431e5690ce40f23be
+W
+'frontend/src/assets/images/downvote.svg,2\6\26860f3f4a9559e6e46760087edde2af842a132f

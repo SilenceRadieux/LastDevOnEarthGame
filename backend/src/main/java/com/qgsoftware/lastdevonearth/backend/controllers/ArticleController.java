@@ -2,6 +2,8 @@ package com.qgsoftware.lastdevonearth.backend.controllers;
 
 import com.qgsoftware.lastdevonearth.backend.dto.ArticleDTO;
 import com.qgsoftware.lastdevonearth.backend.dto.VoteDTO;
+import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
+import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
 import com.qgsoftware.lastdevonearth.backend.services.ArticleService;
 import com.qgsoftware.lastdevonearth.backend.utils.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("article")
 public class ArticleController {
 
+    @Autowired
+    private ArticleRepository articleRepository;
     private final ArticleService articleService;
     ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 
@@ -47,9 +51,11 @@ public class ArticleController {
     }
 
 
-    @GetMapping("/{id}/vote")
+    /*@GetMapping("/{id}/vote/up")
     public Long getVotes(@PathVariable("id") Long id) {
         return articleService.getVotes(id);
-    }
+    }*/
+
+
 
 }

@@ -26,7 +26,8 @@ public class UserController {
     }
 
     @PostMapping("/{id}/article/{articleId}")
-    public boolean addVote(@PathVariable("id") Long id, @PathVariable("articleId") Long articleId, @RequestBody VoteAddDto vote) {
+    public boolean addVote(@PathVariable("id") Long id, @PathVariable("articleId") Long articleId,
+                           @RequestBody VoteAddDto vote) {
         return userService.addVote(id, articleId, vote.vote());
     }
 

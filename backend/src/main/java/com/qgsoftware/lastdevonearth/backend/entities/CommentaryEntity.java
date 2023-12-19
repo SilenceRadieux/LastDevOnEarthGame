@@ -1,5 +1,6 @@
 package com.qgsoftware.lastdevonearth.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class CommentaryEntity {
 
     @ManyToOne
     @JoinColumn(name = "article_id")
+    @JsonIgnore
     private ArticleEntity article;
 
 

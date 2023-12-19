@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,19 +14,17 @@ public class ArticleServiceModel {
     private String cover;
     private String title;
     private String content;
-    private int upvotes;
-    private int downvotes;
+    private List<VoteServiceModel> votes;
 
     public ArticleServiceModel() {
     }
 
-    public ArticleServiceModel(String cover, String title, String content, int upvotes, int downvotes) {
+    public ArticleServiceModel(String cover, String title, String content, List<VoteServiceModel> votes) {
         this.dateCreation = new Date();
         this.cover = cover;
         this.title = title;
         this.content = content;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
+        this.votes = votes;
     }
 
 }

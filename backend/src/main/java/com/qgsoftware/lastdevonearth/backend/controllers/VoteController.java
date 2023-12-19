@@ -31,10 +31,10 @@ public class VoteController {
         return voteMapper.voteServiceModelToVoteDTO(voteService.findById(id));
     }
 
-    @PutMapping("{id}")
+    /*@PutMapping("{id}")
     public void updateVote(@PathVariable("id") Long id, @RequestBody VoteDTO voteDTO) {
         voteService.add(voteMapper.voteDTOToVoteServiceModel(voteDTO), id);
-    }
+    }*/
 
     @DeleteMapping("{id}")
     public boolean deleteVote(@PathVariable("id") Long id) {

@@ -55,8 +55,9 @@ public class ArticleService {
         return null;
     }
 
-    public Long getVotes(Long articleId) {
+    /*public Long getVotes(Long articleId) {
         return voteRepository.countByArticleId(articleId);
-    }
+    }*/
+
 
 }
