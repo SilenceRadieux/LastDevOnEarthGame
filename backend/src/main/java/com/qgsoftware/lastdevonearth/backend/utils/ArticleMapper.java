@@ -7,6 +7,7 @@ import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
 import com.qgsoftware.lastdevonearth.backend.services.ArticleServiceModel;
 import com.qgsoftware.lastdevonearth.backend.services.VoteServiceModel;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public interface ArticleMapper {
 
     List<ArticleDTO> listArticleServiceModelToArticleDTO(List<ArticleServiceModel> articleServiceModel);
 
+    // @Mapping(target = "username", source = "user.username")
     ArticleServiceModel articleEntityToArticleServiceModel(ArticleEntity articleEntity);
 
 

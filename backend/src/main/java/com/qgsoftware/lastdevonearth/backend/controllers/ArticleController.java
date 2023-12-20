@@ -15,8 +15,6 @@ import java.util.List;
 @RequestMapping("article")
 public class ArticleController {
 
-    @Autowired
-    private ArticleRepository articleRepository;
     private final ArticleService articleService;
     ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 
@@ -49,13 +47,5 @@ public class ArticleController {
     public boolean deleteArticle(@PathVariable("id") Long id) {
         return articleService.delete(id);
     }
-
-
-    /*@GetMapping("/{id}/vote/up")
-    public Long getVotes(@PathVariable("id") Long id) {
-        return articleService.getVotes(id);
-    }*/
-
-
 
 }

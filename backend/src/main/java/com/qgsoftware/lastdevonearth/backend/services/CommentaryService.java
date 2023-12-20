@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentaryService {
@@ -20,14 +21,12 @@ public class CommentaryService {
         this.commentaryRepository = commentaryRepository;
     }
 
-
-    public void add(CommentaryServiceModel commentaryServiceModel, @Nullable Long id) {
-        CommentaryEntity commentaryEntity = commentaryMapper.commentaryServiceModelToCommentaryEntity(
-                commentaryServiceModel);
-        if (id != null) {
-            commentaryEntity.setId(id);
+    public CommentaryServiceModel findById(Long id) {
+        Optional<CommentaryEntity> commentaryEntity = commentaryRepository.findById(id);
+        if (commentaryEntity.isPresent()) {
+            return commentaryMapper.commentaryEntityToCommentaryServiceModel(commentaryEntity.get());
         }
-        commentaryRepository.save(commentaryEntity);
+        return null;
     }
 
     public List<CommentaryServiceModel> findAll() {

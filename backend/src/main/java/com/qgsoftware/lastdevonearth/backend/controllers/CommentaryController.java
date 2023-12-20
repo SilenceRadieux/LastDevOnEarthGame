@@ -1,6 +1,8 @@
 package com.qgsoftware.lastdevonearth.backend.controllers;
 
 import com.qgsoftware.lastdevonearth.backend.dto.CommentaryDTO;
+import com.qgsoftware.lastdevonearth.backend.entities.CommentaryEntity;
+import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
 import com.qgsoftware.lastdevonearth.backend.services.CommentaryService;
 import com.qgsoftware.lastdevonearth.backend.utils.CommentaryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,19 @@ import java.util.List;
 public class CommentaryController {
 
     private final CommentaryService commentaryService;
+    private final CommentaryRepository commentaryRepository;
     CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
 
     @Autowired
-    public CommentaryController(CommentaryService commentaryService) {
+    public CommentaryController(CommentaryService commentaryService, CommentaryRepository commentaryRepository) {
         this.commentaryService = commentaryService;
+        this.commentaryRepository = commentaryRepository;
     }
 
-    @PostMapping
-    public void addCommentary(@RequestBody CommentaryDTO commentaryDTO) {
-        commentaryService.add(commentaryMapper.commentaryDTOToCommentaryServiceModel(commentaryDTO), null);
+
+    @GetMapping("/{id}")
+    public CommentaryEntity findById(@PathVariable("id") Long id) {
+        return commentaryRepository.findById(id).get();
     }
 
     @GetMapping
@@ -30,10 +35,6 @@ public class CommentaryController {
         return commentaryMapper.listCommentaryServiceModelToCommentaryDTO(commentaryService.findAll());
     }
 
-    @PutMapping("/{id}")
-    public void updateCommentary(@PathVariable("id") Long id, @RequestBody CommentaryDTO commentaryDTO) {
-        commentaryService.add(commentaryMapper.commentaryDTOToCommentaryServiceModel(commentaryDTO), id);
-    }
 
     @DeleteMapping("/{id}")
     public boolean deleteCommentary(@PathVariable("id") Long id) {

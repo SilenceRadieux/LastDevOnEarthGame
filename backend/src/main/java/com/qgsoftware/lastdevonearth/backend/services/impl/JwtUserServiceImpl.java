@@ -1,16 +1,19 @@
 package com.qgsoftware.lastdevonearth.backend.services.impl;
 
 import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
+import com.qgsoftware.lastdevonearth.backend.entities.CommentaryEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.UserEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
 import com.qgsoftware.lastdevonearth.backend.exception.AccountExistsException;
 import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.UserRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.services.JwtUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +40,8 @@ public class JwtUserServiceImpl implements JwtUserService {
 
     private final VoteRepository voteRepository;
 
+    private final CommentaryRepository commentaryRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -45,12 +50,14 @@ public class JwtUserServiceImpl implements JwtUserService {
                               AuthenticationConfiguration authenticationConfiguration,
                               UserRepository userRepository,
                               ArticleRepository articleRepository,
+                              CommentaryRepository commentaryRepository,
                               VoteRepository voteRepository,
                               PasswordEncoder passwordEncoder) {
         this.signingKey = signingKey;
         this.authenticationConfiguration = authenticationConfiguration;
         this.userRepository = userRepository;
         this.articleRepository = articleRepository;
+        this.commentaryRepository = commentaryRepository;
         this.voteRepository = voteRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -163,6 +170,29 @@ public class JwtUserServiceImpl implements JwtUserService {
             return false;
         }
     }
+
+    @Transactional
+    public boolean addComment(Long id, Long articleId, String commentText) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+        Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
+
+        if (userOptional.isPresent() && articleOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            ArticleEntity article = articleOptional.get();
+
+            CommentaryEntity comment = new CommentaryEntity();
+            comment.setArticle(article);
+            comment.setUser(user);
+            comment.setDateCreation(new Date());
+            comment.setContent(commentText);
+            commentaryRepository.save(comment);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

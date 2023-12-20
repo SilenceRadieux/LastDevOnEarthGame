@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -15,19 +17,19 @@ public class CommentaryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "id_user", nullable = false)
-    private Long idUser;
-
-    @Column(name = "content", nullable = false)
-    private String content;
-
-    @Column(name = "date_time", nullable = false)
-    private String dateTime;
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "article_id")
     @JsonIgnore
     private ArticleEntity article;
 
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "date_time")
+    private Date dateCreation;
 
 }

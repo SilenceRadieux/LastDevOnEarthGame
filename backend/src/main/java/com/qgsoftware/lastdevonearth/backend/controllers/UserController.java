@@ -1,9 +1,6 @@
 package com.qgsoftware.lastdevonearth.backend.controllers;
 
-import com.qgsoftware.lastdevonearth.backend.dto.AuthenticationDTO;
-import com.qgsoftware.lastdevonearth.backend.dto.NewUserDTO;
-import com.qgsoftware.lastdevonearth.backend.dto.UserDTO;
-import com.qgsoftware.lastdevonearth.backend.dto.VoteAddDto;
+import com.qgsoftware.lastdevonearth.backend.dto.*;
 import com.qgsoftware.lastdevonearth.backend.exception.AccountExistsException;
 import com.qgsoftware.lastdevonearth.backend.services.impl.JwtUserServiceImpl;
 import com.qgsoftware.lastdevonearth.backend.utils.UserMapper;
@@ -29,6 +26,12 @@ public class UserController {
     public boolean addVote(@PathVariable("id") Long id, @PathVariable("articleId") Long articleId,
                            @RequestBody VoteAddDto vote) {
         return userService.addVote(id, articleId, vote.vote());
+    }
+
+    @PostMapping("/{id}/article/{articleId}/comment")
+    public boolean addComment(@PathVariable("id") Long id, @PathVariable("articleId") Long articleId,
+                              @RequestBody CommentaryAddDTO comment) {
+        return userService.addComment(id, articleId, comment.content());
     }
 
     @PostMapping("/signup")

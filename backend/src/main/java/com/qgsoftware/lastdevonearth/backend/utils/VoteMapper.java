@@ -13,10 +13,6 @@ public interface VoteMapper {
 
     VoteMapper INSTANCE = Mappers.getMapper(VoteMapper.class);
 
-    VoteServiceModel voteDTOToVoteServiceModel(VoteDTO voteDTO);
-
-    VoteEntity voteServiceModelToVoteEntity(VoteServiceModel voteServiceModel);
-
     List<VoteServiceModel> listVoteEntityToListVoteServiceModel(List<VoteEntity> listVoteEntity);
 
     List<VoteDTO> listVoteServiceModelToVoteDTO(List<VoteServiceModel> voteServiceModel);

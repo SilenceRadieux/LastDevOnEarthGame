@@ -4,6 +4,7 @@ import com.qgsoftware.lastdevonearth.backend.dto.CommentaryDTO;
 import com.qgsoftware.lastdevonearth.backend.entities.CommentaryEntity;
 import com.qgsoftware.lastdevonearth.backend.services.CommentaryServiceModel;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -13,10 +14,7 @@ public interface CommentaryMapper {
 
     CommentaryMapper INSTANCE = Mappers.getMapper(CommentaryMapper.class);
 
-    CommentaryServiceModel commentaryDTOToCommentaryServiceModel(CommentaryDTO commentaryDTO);
-
-    CommentaryEntity commentaryServiceModelToCommentaryEntity(CommentaryServiceModel commentaryServiceModel);
-
+    @Mapping(target = "username", source = "user.username")
     CommentaryServiceModel commentaryEntityToCommentaryServiceModel(CommentaryEntity commentaryEntity);
 
     CommentaryDTO commentaryServiceModelToCommentaryDTO(CommentaryServiceModel commentaryServiceModel);

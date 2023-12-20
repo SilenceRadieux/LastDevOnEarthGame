@@ -2,6 +2,7 @@ package com.qgsoftware.lastdevonearth.backend.services;
 
 import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
 import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.utils.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,15 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final VoteRepository voteRepository;
+    private final CommentaryRepository commentaryRepository;
     ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 
     @Autowired
-    public ArticleService(ArticleRepository articleRepository, VoteRepository voteRepository) {
+    public ArticleService(ArticleRepository articleRepository, VoteRepository voteRepository,
+                          CommentaryRepository commentaryRepository) {
         this.articleRepository = articleRepository;
         this.voteRepository = voteRepository;
+        this.commentaryRepository = commentaryRepository;
     }
 
     public void add(ArticleServiceModel articleServiceModel, @Nullable Long id) {
@@ -54,10 +58,5 @@ public class ArticleService {
         }
         return null;
     }
-
-    /*public Long getVotes(Long articleId) {
-        return voteRepository.countByArticleId(articleId);
-    }*/
-
 
 }

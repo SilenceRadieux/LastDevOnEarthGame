@@ -15,16 +15,19 @@ public class ArticleServiceModel {
     private String title;
     private String content;
     private List<VoteServiceModel> votes;
+    private List<CommentaryServiceModel> comments;
 
     public ArticleServiceModel() {
     }
 
-    public ArticleServiceModel(String cover, String title, String content, List<VoteServiceModel> votes) {
+    public ArticleServiceModel(String cover, String title, String content, List<VoteServiceModel> votes,
+                               List<CommentaryServiceModel> comments) {
         this.dateCreation = new Date();
         this.cover = cover;
         this.title = title;
         this.content = content;
         this.votes = votes;
+        this.comments = comments;
     }
 
 }
