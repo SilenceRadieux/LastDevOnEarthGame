@@ -18,19 +18,22 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "pseudonym", nullable = false)
-    private String pseudonym;
-
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    public UserEntity (String pseudonym, String email, String password) {
-        this.pseudonym = pseudonym;
-        this.email = email;
+   /* @ElementCollection
+    private Set<Long> votedArticleIds = new HashSet<>() ;*/
+
+    public UserEntity(String username, String password) {
+        this.username = username;
         this.password = password;
+    }
+
+    public void addVote(Long articleId) {
+        VoteEntity vote = new VoteEntity();
     }
 
     @Override
@@ -45,7 +48,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return pseudonym;
+        return username;
     }
 
     @Override
@@ -67,4 +70,6 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

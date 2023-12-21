@@ -1,8 +1,11 @@
 package com.qgsoftware.lastdevonearth.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -14,13 +17,19 @@ public class CommentaryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "id_user", nullable = false)
-    private Long idUser;
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private UserEntity user;
 
-    @Column(name = "content", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    @JsonIgnore
+    private ArticleEntity article;
+
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "date_time", nullable = false)
-    private String dateTime;
+    @Column(name = "date_time")
+    private Date dateCreation;
 
 }

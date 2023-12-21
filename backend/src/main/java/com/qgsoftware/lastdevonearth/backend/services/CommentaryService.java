@@ -6,28 +6,27 @@ import com.qgsoftware.lastdevonearth.backend.utils.CommentaryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentaryService {
 
-    CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
-
     private final CommentaryRepository commentaryRepository;
+    CommentaryMapper commentaryMapper = CommentaryMapper.INSTANCE;
 
     @Autowired
     public CommentaryService(CommentaryRepository commentaryRepository) {
         this.commentaryRepository = commentaryRepository;
     }
 
-
-    public void add(CommentaryServiceModel commentaryServiceModel, @Nullable Long id) {
-        CommentaryEntity commentaryEntity = commentaryMapper.commentaryServiceModelToCommentaryEntity(
-                commentaryServiceModel);
-        if (id != null) {
-            commentaryEntity.setId(id);
+    public CommentaryServiceModel findById(Long id) {
+        Optional<CommentaryEntity> commentaryEntity = commentaryRepository.findById(id);
+        if (commentaryEntity.isPresent()) {
+            return commentaryMapper.commentaryEntityToCommentaryServiceModel(commentaryEntity.get());
         }
-        commentaryRepository.save(commentaryEntity);
+        return null;
     }
 
     public List<CommentaryServiceModel> findAll() {

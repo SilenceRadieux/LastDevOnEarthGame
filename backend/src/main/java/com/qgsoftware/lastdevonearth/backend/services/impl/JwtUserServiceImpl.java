@@ -1,13 +1,19 @@
 package com.qgsoftware.lastdevonearth.backend.services.impl;
 
-
+import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
+import com.qgsoftware.lastdevonearth.backend.entities.CommentaryEntity;
 import com.qgsoftware.lastdevonearth.backend.entities.UserEntity;
+import com.qgsoftware.lastdevonearth.backend.entities.VoteEntity;
 import com.qgsoftware.lastdevonearth.backend.exception.AccountExistsException;
+import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.UserRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.services.JwtUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -29,24 +36,36 @@ public class JwtUserServiceImpl implements JwtUserService {
 
     private final UserRepository userRepository;
 
+    private final ArticleRepository articleRepository;
+
+    private final VoteRepository voteRepository;
+
+    private final CommentaryRepository commentaryRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public JwtUserServiceImpl(@Value("${jwt.signing.key}")
-            String signingKey,
-            AuthenticationConfiguration authenticationConfiguration,
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder) {
+                              String signingKey,
+                              AuthenticationConfiguration authenticationConfiguration,
+                              UserRepository userRepository,
+                              ArticleRepository articleRepository,
+                              CommentaryRepository commentaryRepository,
+                              VoteRepository voteRepository,
+                              PasswordEncoder passwordEncoder) {
         this.signingKey = signingKey;
         this.authenticationConfiguration = authenticationConfiguration;
         this.userRepository = userRepository;
+        this.articleRepository = articleRepository;
+        this.commentaryRepository = commentaryRepository;
+        this.voteRepository = voteRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByPseudonym(username);
+        UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("The owner could not be found");
         }
@@ -60,14 +79,20 @@ public class JwtUserServiceImpl implements JwtUserService {
     }
 
     @Override
-    public UserDetails save(String username, String email, String password) throws AccountExistsException {
-        UserDetails existingUser = userRepository.findByPseudonym(username);
+    public UserDetails save(String username, String password) throws AccountExistsException {
+        UserDetails existingUser = userRepository.findByUsername(username);
         if (existingUser != null) {
             throw new AccountExistsException();
         }
-        UserEntity userEntity = new UserEntity(username, email, passwordEncoder.encode(password));
+        UserEntity userEntity = new UserEntity(username, passwordEncoder.encode(password));
         userRepository.save(userEntity);
         return userEntity;
+    }
+
+    @Override
+    public Long getUserId(String username) {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        return (userEntity != null) ? userEntity.getId() : null;
     }
 
     @Override
@@ -97,10 +122,10 @@ public class JwtUserServiceImpl implements JwtUserService {
                 .compact();
     }
 
-    public void updatePseudonym(Long id, String pseudonym) {
+    public void updateUsername(Long id, String username) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isPresent()) {
-            userEntity.get().setPseudonym(pseudonym);
+            userEntity.get().setUsername(username);
             userRepository.save(userEntity.get());
         }
     }
@@ -113,16 +138,62 @@ public class JwtUserServiceImpl implements JwtUserService {
         }
     }
 
-    public void updateEmail(Long id, String email) {
-        Optional<UserEntity> userEntity = userRepository.findById(id);
-        if (userEntity.isPresent()) {
-            userEntity.get().setEmail(email);
-            userRepository.save(userEntity.get());
-        }
-    }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public boolean addVote(Long id, Long articleId, String voteString) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+        Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
+
+        if (userOptional.isPresent() && articleOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            ArticleEntity article = articleOptional.get();
+
+            Optional<VoteEntity> existingVoteOptional = voteRepository.findByUserAndArticle(user, article);
+
+            if (existingVoteOptional.isPresent()) {
+                VoteEntity existingVote = existingVoteOptional.get();
+                existingVote.setVote(voteString);
+                voteRepository.save(existingVote);
+            } else {
+                VoteEntity vote = new VoteEntity();
+                vote.setArticle(article);
+                vote.setUser(user);
+                vote.setVote(voteString);
+                voteRepository.save(vote);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean addComment(Long id, Long articleId, String commentText) {
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+        Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
+
+        if (userOptional.isPresent() && articleOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            ArticleEntity article = articleOptional.get();
+
+            CommentaryEntity comment = new CommentaryEntity();
+            comment.setArticle(article);
+            comment.setUser(user);
+            comment.setDateCreation(new Date());
+            comment.setContent(commentText);
+            commentaryRepository.save(comment);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 
 }

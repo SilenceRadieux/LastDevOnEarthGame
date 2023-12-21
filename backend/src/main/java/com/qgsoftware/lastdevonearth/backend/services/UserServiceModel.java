@@ -10,8 +10,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 public class UserServiceModel implements UserDetails {
-    private String pseudonym;
-    private String email;
+    private String username;
     private String password;
 
     @Override

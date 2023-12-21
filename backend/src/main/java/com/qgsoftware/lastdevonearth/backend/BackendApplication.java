@@ -9,20 +9,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+    }
 
-	@Configuration
-	public class WebConfig implements WebMvcConfigurer {
-		@Override
-		public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/**")
-					.allowedOrigins("http://localhost:4200")
-					.allowedMethods("GET", "POST", "PUT", "DELETE")
-					.allowedHeaders("*")
-					.allowCredentials(true);
-		}
-	}
+    @Configuration
+    public static class WebConfig implements WebMvcConfigurer {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("http://localhost:4200")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
+        }
+    }
 
 }

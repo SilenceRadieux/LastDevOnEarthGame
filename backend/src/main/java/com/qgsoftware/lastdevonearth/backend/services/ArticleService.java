@@ -2,23 +2,30 @@ package com.qgsoftware.lastdevonearth.backend.services;
 
 import com.qgsoftware.lastdevonearth.backend.entities.ArticleEntity;
 import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
+import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
 import com.qgsoftware.lastdevonearth.backend.utils.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
 
+    private final ArticleRepository articleRepository;
+    private final VoteRepository voteRepository;
+    private final CommentaryRepository commentaryRepository;
     ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 
-
-   private final ArticleRepository articleRepository;
-
     @Autowired
-    public ArticleService(ArticleRepository articleRepository) {
+    public ArticleService(ArticleRepository articleRepository, VoteRepository voteRepository,
+                          CommentaryRepository commentaryRepository) {
         this.articleRepository = articleRepository;
+        this.voteRepository = voteRepository;
+        this.commentaryRepository = commentaryRepository;
     }
 
     public void add(ArticleServiceModel articleServiceModel, @Nullable Long id) {
@@ -30,7 +37,8 @@ public class ArticleService {
     }
 
     public List<ArticleServiceModel> findAll() {
-        return articleMapper.listArticleEntityToListArticleServiceModel((List<ArticleEntity>) articleRepository.findAll());
+        return articleMapper.listArticleEntityToListArticleServiceModel((List<ArticleEntity>)
+                articleRepository.findAll());
     }
 
     public boolean delete(long id) {
@@ -40,6 +48,15 @@ public class ArticleService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+
+    public ArticleServiceModel findById(Long id) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(id);
+        if (articleEntity.isPresent()) {
+            return articleMapper.articleEntityToArticleServiceModel(articleEntity.get());
+        }
+        return null;
     }
 
 }
