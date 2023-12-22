@@ -9,7 +9,9 @@ import com.qgsoftware.lastdevonearth.backend.repositories.ArticleRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.CommentaryRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.UserRepository;
 import com.qgsoftware.lastdevonearth.backend.repositories.VoteRepository;
+import com.qgsoftware.lastdevonearth.backend.services.ArticleServiceModel;
 import com.qgsoftware.lastdevonearth.backend.services.JwtUserService;
+import com.qgsoftware.lastdevonearth.backend.utils.ArticleMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -43,6 +45,8 @@ public class JwtUserServiceImpl implements JwtUserService {
     private final CommentaryRepository commentaryRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    ArticleMapper articleMapper = ArticleMapper.INSTANCE;
 
     @Autowired
     public JwtUserServiceImpl(@Value("${jwt.signing.key}")
@@ -112,7 +116,7 @@ public class JwtUserServiceImpl implements JwtUserService {
     @Override
     public String generateJwtUser(UserDetails user) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + 3600 * 1000);
+        Date expiryDate = new Date(now.getTime() + 1000 * 60 * 60 *24);
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
@@ -143,7 +147,8 @@ public class JwtUserServiceImpl implements JwtUserService {
         userRepository.deleteById(id);
     }
 
-    public boolean addVote(Long id, Long articleId, String voteString) {
+    @Transactional
+    public ArticleServiceModel addVote(Long id, Long articleId, String voteString) {
         Optional<UserEntity> userOptional = userRepository.findById(id);
         Optional<ArticleEntity> articleOptional = articleRepository.findById(articleId);
 
@@ -152,9 +157,9 @@ public class JwtUserServiceImpl implements JwtUserService {
             ArticleEntity article = articleOptional.get();
 
             Optional<VoteEntity> existingVoteOptional = voteRepository.findByUserAndArticle(user, article);
-
+            VoteEntity existingVote = null;
             if (existingVoteOptional.isPresent()) {
-                VoteEntity existingVote = existingVoteOptional.get();
+                existingVote = existingVoteOptional.get();
                 existingVote.setVote(voteString);
                 voteRepository.save(existingVote);
             } else {
@@ -165,9 +170,9 @@ public class JwtUserServiceImpl implements JwtUserService {
                 voteRepository.save(vote);
             }
 
-            return true;
+            return articleMapper.articleEntityToArticleServiceModel(article);
         } else {
-            return false;
+            return null;
         }
     }
 

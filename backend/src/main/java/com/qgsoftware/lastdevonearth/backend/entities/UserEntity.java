@@ -24,8 +24,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-   /* @ElementCollection
-    private Set<Long> votedArticleIds = new HashSet<>() ;*/
 
     public UserEntity(String username, String password) {
         this.username = username;
